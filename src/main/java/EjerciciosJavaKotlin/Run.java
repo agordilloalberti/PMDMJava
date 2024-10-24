@@ -1,6 +1,5 @@
 package EjerciciosJavaKotlin;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Ayudas.*;
@@ -259,7 +258,7 @@ public class Run {
 
             @Override
             public String toString() {
-                return "El nombre del anime es: "+nombre+", pertenece al genero "+genero+" y tiene "+episodios+" episodios "
+                return "El nombre del anime es: "+nombre+", pertenece al genero "+genero+" y tiene "+episodios+" episodios ";
             }
         }
         System.out.println("Introduzca el nombre del anime");
@@ -273,11 +272,11 @@ public class Run {
         System.out.println(a);
     }
 
-    private static void ej14(){
-        class Videojuego{
-            private String titulo;
-            private String plataforma;
-            private double horasJugadas;
+    private static void ej14() {
+        class Videojuego {
+            public String titulo;
+            public String plataforma;
+            public double horasJugadas;
 
             public Videojuego(String titulo, String plataforma, double horasJugadas) {
                 this.titulo = titulo;
@@ -285,12 +284,73 @@ public class Run {
                 this.horasJugadas = horasJugadas;
             }
 
+            public static String eliminarJuego(ArrayList<Videojuego> inventario) {
+                System.out.println("Introduzca el nombre del juego a eliminar");
+                String n = sc.nextLine().toLowerCase();
+                String r = "No se ha encontrado el juego\n";
+                for (Videojuego v : inventario){
+                    if (v.titulo.toLowerCase().equals(n)){
+                        inventario.remove(v);
+                        r="El juego "+v.titulo+" ha sido eliminado del inventario\n";
+                        break;
+                    }
+                }
+                return r;
+            }
+
             @Override
             public String toString() {
-                return "El juego: "+titulo+", esta disponible en "+plataforma+" y llevas "+horasJugadas+" horas jugadas\n";
+                return "El juego: " + titulo + ", esta disponible en " + plataforma + " y llevas " + horasJugadas + " horas jugadas\n";
+            }
+
+            public static String crearJuego(ArrayList<Videojuego> i) {
+                System.out.println("Introduzca el nombre del juego");
+                String t = sc.nextLine();
+                System.out.println("Introduzca la plataforma en la que se puede jugar al juego");
+                String p = sc.nextLine();
+                System.out.println("Introduzca las horas jugadas");
+                String hS = sc.nextLine();
+                try {
+                    double h = Double.parseDouble(hS);
+                    i.add(new Videojuego(t, p, h));
+                    return "Se ha añadido el juego con exito";
+                } catch (Exception e) {
+                    return "Se ha introducido un valor incorreto, el juego no ha sido añadido";
+                }
             }
         }
 
-
+        ArrayList<Videojuego> inventario = new ArrayList<>();
+        String op;
+        do {
+            System.out.println("¿Que desea hacer?\n1.Añadir un juego.\n2.Eliminar un juego.\n3.Mostrar el inventario.\n0.Salir");
+            op = sc.nextLine();
+            switch (op){
+                case "1":
+                    System.out.println(Videojuego.crearJuego(inventario));
+                    break;
+                case "2":
+                    if (!inventario.isEmpty()) {
+                        System.out.println(Videojuego.eliminarJuego(inventario));
+                    }else {
+                        System.out.println("No hay juegos en el inventario");
+                    }
+                    break;
+                case "3":
+                    if (!inventario.isEmpty()){
+                        for (Videojuego v : inventario){
+                            System.out.println(v);
+                        }
+                    }else {
+                        System.out.println("No hay juegos en el inventario");
+                    }
+                    break;
+                case "0":
+                    System.out.println("Gracias por usar esta aplicación, adiós");
+                    break;
+                default:
+                    System.out.println("Opción no valida");
+            }
+        } while (!op.equals("0"));
     }
 }
