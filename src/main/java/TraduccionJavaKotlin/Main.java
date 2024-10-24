@@ -1,8 +1,8 @@
 package TraduccionJavaKotlin;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
-        ej4();
+
     }
 
     public static void ej2(){
